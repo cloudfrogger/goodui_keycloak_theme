@@ -58,7 +58,7 @@ jobs:
       GOODUI_TEST_PORT: '8092'
       KEYCLOAK_BASE_URL: http://localhost:8092
       DOCKERHUB_IMAGE: cloudfrogger/goodui-keycloak-theme
-      PUBLISH_IMAGE: ${{ github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')) }}
+      PUBLISH_IMAGE: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

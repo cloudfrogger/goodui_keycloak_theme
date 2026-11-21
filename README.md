@@ -1,5 +1,9 @@
 # GoodUI Keycloak Theme
 
+[![Drone CI](https://drone.cloudfrogger.com/api/badges/cloudfrogger/goodui_keycloak_theme/status.svg?ref=refs/heads/main)](https://drone.cloudfrogger.com/cloudfrogger/goodui_keycloak_theme)
+[![GitHub Actions](https://github.com/cloudfrogger/goodui_keycloak_theme/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/cloudfrogger/goodui_keycloak_theme/actions/workflows/check.yml)
+[![Docker Hub](https://img.shields.io/docker/v/cloudfrogger/goodui-keycloak-theme?label=Docker%20Hub)](https://hub.docker.com/r/cloudfrogger/goodui-keycloak-theme)
+
 ![GoodUI für Keycloak: Anmeldung in Hell und Dunkel, Registrierung, Konto, Administration und mobile Ansicht](docs/theme-collage.png)
 
 Native Keycloak-Themes im Stil von [GoodUI](https://goodui.cloudfrogger.com): klare Flächen, blaue Akzente, feine Rahmen und gerundete Bedienelemente. Hell, Dunkel und automatische Systemauswahl. Ohne Angular, zusätzliche Keycloak-Erweiterung oder externe Webfonts.
@@ -163,14 +167,14 @@ Nach Änderungen an Farben oder Logos reicht ein erneuter Image-Build. Für eine
 
 ### Automatischer Build und Push zu Docker Hub
 
-Der [GitHub-Workflow](.github/workflows/check.yml) prüft zuerst Theme und Browserabläufe. Danach baut er das vollständige Docker-Image und testet es mit PostgreSQL im optimierten Startmodus; dabei wird kein Theme-Verzeichnis eingebunden. Erst nach erfolgreichen Browserprüfungen wird **genau dieses getestete Image** zu Docker Hub gepusht.
+Die [Drone-Pipeline](.drone.yml) prüft bei Pushes auf `main` die Theme-Tests und den Paketbau. Anschließend baut Kaniko das vollständige Docker-Image und veröffentlicht es auf Docker Hub. [GitHub Actions](.github/workflows/check.yml) prüft unabhängig davon die Browserabläufe sowie das optimierte Image mit PostgreSQL. Ein Drone-Push auf `main` wartet derzeit nicht auf das Ergebnis dieser unabhängigen Browserprüfungen.
 
-- Push auf `main`: Veröffentlichung als `latest`, `26.8.2` und `sha-<Commit>`.
-- Push eines Git-Tags wie `v0.1.0`: Veröffentlichung als `0.1.0` und `sha-<Commit>`; `latest` wird dabei nicht geändert.
-- Pull Requests und andere Branches: Build und Tests ohne Docker-Hub-Push.
-- Manueller Workflow-Start auf `main`: ebenfalls Build, Tests und Veröffentlichung.
+- Push auf `main`: Drone veröffentlicht als `latest`, `26.8.2` und `sha-<Commit>`.
+- Push eines Git-Tags wie `v0.1.0`: GitHub Actions veröffentlicht nach Browserprüfungen als `0.1.0` und `sha-<Commit>`; `latest` wird dabei nicht geändert.
+- Pull Requests und andere Branches: GitHub Actions baut und testet ohne Docker-Hub-Push.
+- Manueller GitHub-Workflow-Start auf `main`: Tests ohne Docker-Hub-Push.
 
-Die Anmeldung wird in den GitHub-Repository-Einstellungen unter **Settings → Secrets and variables → Actions** konfiguriert: Repository-Variable `DOCKERHUB_USERNAME` und Repository-Secret `DOCKERHUB_TOKEN` mit Schreibzugriff auf das Ziel-Image. Für dieses Repository ist die Anmeldung eingerichtet. In einem Fork zusätzlich `DOCKERHUB_IMAGE` im Workflow auf das eigene Docker-Hub-Repository setzen. Die Einrichtung folgt dem [Docker-Workflow für GitHub Actions](https://docs.docker.com/build/ci/github-actions/push-multi-registries/).
+Drone verwendet für `main` ein repo-spezifisch verschlüsseltes `dockerhub_token` in `.drone.yml`. GitHub Actions verwendet für Release-Tags weiterhin die Repository-Variable `DOCKERHUB_USERNAME` und das Repository-Secret `DOCKERHUB_TOKEN`. In einem Fork müssen die Bildnamen und Zugänge an den eigenen Docker-Hub-Namespace angepasst werden.
 
 Die Image-Prüfungen lassen sich lokal in einer getrennten Testinstanz wiederholen:
 
