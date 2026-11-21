@@ -1,0 +1,15 @@
+{
+  "name": "goodui-keycloak-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Native Keycloak themes using GoodUI design tokens",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node --test tests/theme-init.test.mjs",
+    "test:e2e": "playwright test",
+    "build": "python3 scripts/build.py",
+    "dev": "docker compose up -d",
+    "stop": "docker compose down"
+  },
+  "devDependencies": { "@playwright/test": "1.58.2" }
+}

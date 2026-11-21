@@ -1,0 +1,52 @@
+/* Shared GoodUI visual layer for the original React consoles. */
+:root, :root.pf-v5-theme-dark {
+  --pf-v5-global--FontFamily--text: var(--good-font);
+  --pf-v5-global--FontFamily--heading: var(--good-font);
+  --pf-v5-global--BackgroundColor--100: var(--good-color-surface);
+  --pf-v5-global--BackgroundColor--200: var(--good-color-selected);
+  --pf-v5-global--BackgroundColor--300: var(--good-color-canvas);
+  --pf-v5-global--Color--100: var(--good-color-text);
+  --pf-v5-global--Color--200: var(--good-color-muted);
+  --pf-v5-global--BorderColor--100: var(--good-color-border);
+  --pf-v5-global--primary-color--100: var(--good-color-brand);
+  --pf-v5-global--primary-color--200: var(--good-brand-hover);
+  --pf-v5-global--link--Color: var(--good-color-accent);
+  background: var(--good-color-canvas);
+  color: var(--good-color-text);
+  color-scheme: light;
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+body, .keycloak__loading-container { background: var(--good-color-canvas) !important; color: var(--good-color-text) !important; font-family: var(--good-font); }
+.pf-v5-c-page__header, .pf-v5-c-masthead, .pf-v5-c-page__sidebar, .pf-v5-c-nav {
+  background: var(--good-color-surface); color: var(--good-color-text);
+  --pf-v5-c-masthead--BackgroundColor: var(--good-color-surface);
+  --pf-v5-c-page__sidebar--BackgroundColor: var(--good-color-surface);
+  --pf-v5-c-nav__link--Color: var(--good-color-text);
+  --pf-v5-c-nav__link--m-current--Color: var(--good-color-accent);
+  --pf-v5-c-nav__link--m-current--BackgroundColor: var(--good-color-selected);
+  --pf-v5-c-nav__link--hover--BackgroundColor: var(--good-color-selected);
+}
+.pf-v5-c-masthead { border-bottom: 1px solid var(--good-color-border); }
+.pf-v5-c-page__sidebar { border-inline-end: 1px solid var(--good-color-border); }
+.pf-v5-c-masthead__brand img, .pf-v5-c-page__header-brand img { width: var(--good-logo-width); height: auto; content: url('../img/goodui-logo-light.svg'); }
+[data-theme="dark"] .pf-v5-c-masthead__brand img, [data-theme="dark"] .pf-v5-c-page__header-brand img { content: url('../img/goodui-logo-dark.svg'); }
+.pf-v5-c-button { border-radius: var(--good-radius-control); }
+.pf-v5-c-button::after { border-radius: inherit; }
+.pf-v5-c-button.pf-m-primary { background: var(--good-color-brand); color: var(--good-brand-foreground); }
+.pf-v5-c-button.pf-m-primary:hover { background: var(--good-brand-hover); }
+.pf-v5-c-card { border: 1px solid var(--good-color-border); border-radius: var(--good-radius-card); box-shadow: none; }
+.pf-v5-c-form-control { border-radius: var(--good-radius-control); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--good-color-accent); outline-offset: 2px; }
+/* Consoles mark their masthead as dark even when the page is light. */
+.pf-v5-c-masthead :is(.pf-v5-c-button.pf-m-plain, .pf-v5-c-menu-toggle, .pf-v5-c-dropdown__toggle) {
+  color: var(--good-color-text);
+  background: var(--good-color-surface);
+  --pf-v5-c-menu-toggle--Color: var(--good-color-text);
+  --pf-v5-c-menu-toggle--BackgroundColor: var(--good-color-surface);
+}
+.pf-v5-c-page__main, .pf-v5-c-page__main-section { background: var(--good-color-canvas); color: var(--good-color-text); }
+.pf-v5-c-form-control { background: var(--good-color-surface); color: var(--good-color-text); border: 1px solid var(--good-color-border); }
+.pf-v5-c-form-control::after, .pf-v5-c-form-control::before { border: 0; }
+.pf-v5-c-form-control > :is(input, select, textarea) { color: inherit; background: transparent; }
+.pf-v5-c-form-control:focus-within { outline: 2px solid var(--good-color-accent); outline-offset: 2px; }
+.pf-v5-c-nav__section, .pf-v5-c-nav__item { border-color: var(--good-color-border); }

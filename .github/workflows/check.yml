@@ -1,0 +1,48 @@
+name: Check and package theme
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: npm ci
+      - run: python3 scripts/sync-resources.py && git diff --exit-code
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: docker compose up -d
+      - name: Wait for Keycloak
+        run: |
+          for attempt in $(seq 1 90); do
+            if curl --fail --silent http://localhost:8089/realms/goodui/.well-known/openid-configuration > /dev/null; then exit 0; fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        with:
+          name: goodui-keycloak-theme
+          path: dist/*
+      - name: Browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-evidence
+          path: |
+            test-results/
+            docs/*.png
+      - if: always()
+        run: docker compose down
