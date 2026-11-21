@@ -10,6 +10,18 @@
   --pf-v5-global--primary-color--100: var(--good-color-brand);
   --pf-v5-global--primary-color--200: var(--good-brand-hover);
   --pf-v5-global--link--Color: var(--good-color-accent);
+  --pf-v5-global--primary-color--300: var(--good-color-brand);
+  --pf-v5-global--primary-color--dark-100: var(--good-color-brand);
+  --pf-v5-global--primary-color--light-100: var(--good-color-accent);
+  --pf-v5-global--active-color--100: var(--good-color-accent);
+  --pf-v5-global--active-color--200: var(--good-color-selected);
+  --pf-v5-global--active-color--300: var(--good-color-accent);
+  --pf-v5-global--active-color--400: var(--good-color-accent);
+  --pf-v5-global--link--Color--hover: var(--good-color-accent);
+  --pf-v5-global--link--Color--dark: var(--good-color-accent);
+  --pf-v5-global--link--Color--dark--hover: var(--good-color-accent);
+  --pf-v5-global--link--Color--light: var(--good-color-accent);
+  --pf-v5-global--link--Color--light--hover: var(--good-color-accent);
   --pf-v5-global--danger-color--100: var(--good-color-error);
   background: var(--good-color-canvas);
   color: var(--good-color-text);

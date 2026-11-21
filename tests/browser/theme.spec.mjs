@@ -137,3 +137,73 @@ test('password update and TOTP enrollment complete with original required action
     const result=await request.delete(location,{headers});expect(result.ok()).toBeTruthy();
   }
 });
+
+for (const mode of ['light','dark']) {
+  test(`${mode}: URL primary color is ready at first paint and survives form navigation`,async ({page})=>{
+    await page.addInitScript(()=>{
+      window.paintColors=[];
+      new PerformanceObserver(list=>{
+        for(const entry of list.getEntries())window.paintColors.push(document.documentElement.style.getPropertyValue('--good-color-brand'));
+      }).observe({type:'paint',buffered:true});
+    });
+    await page.goto(authPath+'&theme_mode='+mode+'&theme_color=7C3AED');
+    await expect(page.locator('#kc-login')).toHaveCSS('background-color','rgb(124, 58, 237)');
+    await expect(page.locator('#kc-login')).toHaveCSS('color','rgb(255, 255, 255)');
+    await expect.poll(()=>page.evaluate(()=>window.paintColors.length)).toBeGreaterThan(0);
+    expect(await page.evaluate(()=>window.paintColors.every(color=>color==='#7c3aed'))).toBe(true);
+    const accent=await page.evaluate(()=>document.documentElement.style.getPropertyValue('--good-color-accent'));
+    const outline=await page.locator('#username').evaluate(el=>getComputedStyle(el.closest('.pf-v5-c-form-control')).outlineColor);
+    const expectedAccent=await page.evaluate(color=>{const el=document.createElement('span');el.style.color=color;document.body.append(el);const value=getComputedStyle(el).color;el.remove();return value;},accent);
+    expect(outline).toBe(expectedAccent);
+    await page.locator('#kc-header').click();
+    await page.screenshot({path:`docs/primary-color-${mode}.png`,fullPage:true});
+    await page.locator('#kc-registration a').click();
+    await expect(page.locator('#email')).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('data-theme-color','7c3aed');
+    await expect(page.locator('button[type=submit],input[type=submit]').first()).toHaveCSS('background-color','rgb(124, 58, 237)');
+    await page.goto(authPath+'&theme_mode='+mode);
+    await page.locator('a[href*="reset-credentials"]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme-color','7c3aed');
+    await page.locator('#goodui-theme-mode').selectOption(mode==='light'?'dark':'light');
+    await expect(page.locator('html')).toHaveAttribute('data-theme-color','7c3aed');
+    await page.goto(authPath+'&theme_color=default');
+    await expect(page.locator('html')).not.toHaveAttribute('data-theme-color');
+    await expect(page.locator('#kc-login')).toHaveCSS('background-color','rgb(37, 99, 235)');
+  });
+}
+
+test('URL primary color reaches account navigation and admin tabs and actions',async ({page})=>{
+  await page.goto('/realms/goodui/account/?theme_mode=dark&theme_color=7c3aed');
+  await page.locator('#username').fill('demo');await page.locator('#password').fill('demo-change-me');await page.locator('#kc-login').click();
+  await expect(page.locator('input[name="email"]')).toBeVisible();
+  await expect(page.locator('.pf-v5-c-button.pf-m-primary').first()).toHaveCSS('background-color','rgb(124, 58, 237)');
+  const accent=await page.locator('.pf-v5-c-nav__link.pf-m-current').first().evaluate(el=>({link:getComputedStyle(el).color, border:getComputedStyle(el,'::after').borderLeftColor}));
+  expect(accent.link).not.toBe('rgb(96, 165, 250)');
+  expect(accent.border).toBe(accent.link);
+  await page.screenshot({path:'test-results/primary-color-account.png',fullPage:true});
+  await page.goto('/admin/master/console/?theme_mode=light&theme_color=15803d');
+  await page.locator('#username').fill('admin');await page.locator('#password').fill('local-admin-change-me');await page.locator('#kc-login').click();
+  await expect(page.getByRole('heading',{name:'Welcome to Keycloak'})).toBeVisible();
+  await expect(page.locator('.pf-v5-c-button.pf-m-primary').first()).toHaveCSS('background-color','rgb(21, 128, 61)');
+  await expect(page.locator('html')).toHaveAttribute('data-theme-color','15803d');
+  const active=await page.locator('.pf-v5-c-tabs__item.pf-m-current .pf-v5-c-tabs__link').first().evaluate(el=>getComputedStyle(el,'::after').borderTopColor);
+  expect(active).toBe('rgb(21, 128, 61)');
+  await page.screenshot({path:'test-results/primary-color-admin.png',fullPage:true});
+});
+
+test('malicious color input has no styling or network effect and blocked storage still permits a valid URL color',async ({page})=>{
+  const external=[];
+  page.on('request',request=>{if(new URL(request.url()).origin!==new URL(baseURL).origin)external.push(request.url());});
+  await page.goto(authPath+'&theme_color='+encodeURIComponent('7c3aed; background-image:url(https://invalid.example/steal)'));
+  await expect(page.locator('#kc-login')).toHaveCSS('background-color','rgb(37, 99, 235)');
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme-color');
+  await page.addInitScript(()=>{
+    Storage.prototype.getItem=function(){throw new Error('Blocked for testing');};
+    Storage.prototype.setItem=function(){throw new Error('Blocked for testing');};
+    Storage.prototype.removeItem=function(){throw new Error('Blocked for testing');};
+  });
+  await page.goto(authPath+'&theme_color=ffffff');
+  await expect(page.locator('#kc-login')).toHaveCSS('background-color','rgb(255, 255, 255)');
+  await expect(page.locator('#kc-login')).toHaveCSS('color','rgb(0, 0, 0)');
+  expect(external).toEqual([]);
+});

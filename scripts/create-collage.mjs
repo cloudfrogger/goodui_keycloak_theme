@@ -11,14 +11,14 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const views = path.join(root, 'docs/views');
 await mkdir(views, { recursive: true });
 const base = 'http://localhost:8089';
-const auth = `${base}/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&kc_locale=de`;
+const auth = `${base}/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&kc_locale=en`;
 const browser = await chromium.launch();
 async function ready(page) {
   await page.evaluate(() => document.fonts.ready);
   await page.locator('img:visible').evaluateAll(images => Promise.all(images.map(image => image.decode().catch(() => {}))));
 }
 async function loginView(mode, name, register = false) {
-  const page = await browser.newPage({viewport: {width: 1000, height: 1200}});
+  const page = await browser.newPage({locale: 'en-US', viewport: {width: 1000, height: 1200}});
   try {
     await page.goto(`${auth}&theme_mode=${mode}`);
     await page.locator('#username').waitFor();
@@ -35,7 +35,7 @@ try {
   await loginView('light', 'login-light.png');
   await loginView('dark', 'login-dark.png');
   await loginView('light', 'registration-light.png', true);
-  const mobile = await browser.newPage({viewport: {width: 375, height: 812}});
+  const mobile = await browser.newPage({locale: 'en-US', viewport: {width: 375, height: 812}});
   await mobile.goto(`${auth}&theme_mode=dark`);
   await mobile.locator('#username').waitFor();
   await mobile.evaluate(() => document.activeElement?.blur());
@@ -43,10 +43,10 @@ try {
   await mobile.screenshot({path: path.join(views, 'mobile-dark.png'), fullPage: true});
   await mobile.close();
   for (const [kind, url, username, password] of [
-    ['account', '/realms/goodui/account/?theme_mode=dark&kc_locale=de', 'demo', 'demo-change-me'],
-    ['admin', '/admin/master/console/?theme_mode=light&kc_locale=de', 'admin', 'local-admin-change-me'],
+    ['account', '/realms/goodui/account/?theme_mode=dark&kc_locale=en', 'demo', 'demo-change-me'],
+    ['admin', '/admin/master/console/?theme_mode=light&kc_locale=en', 'admin', 'local-admin-change-me'],
   ]) {
-    const page = await browser.newPage({viewport: {width: 1280, height: 900}});
+    const page = await browser.newPage({locale: 'en-US', viewport: {width: 1280, height: 900}});
     await page.goto(base + url);
     await page.locator('#username').fill(username);
     await page.locator('#password').fill(password);
@@ -54,7 +54,7 @@ try {
     await page.locator('.pf-v5-c-masthead').waitFor();
     // Wait for the application data, not only its masthead/loading shell.
     if (kind === 'account') await page.locator('input[name="email"]').waitFor();
-    else await page.getByRole('heading', {name: /Welcome to Keycloak|Willkommen bei Keycloak/}).waitFor();
+    else await page.getByRole('heading', {name: /Welcome to Keycloak/}).waitFor();
     await ready(page);
     await page.screenshot({path: path.join(views, `${kind}.png`), fullPage: true});
     await page.close();
@@ -63,12 +63,12 @@ try {
   const dataUrl = async (file, mime = 'image/png') => `data:${mime};base64,${(await readFile(file)).toString('base64')}`;
   const logo = await dataUrl(path.join(root, 'themes/goodui/login/resources/img/goodui-logo-dark.svg'), 'image/svg+xml');
   const cards = [
-    ['login-light.png', '01', 'Anmeldung', 'Hell. Klar. Vertraut.', 'light'],
-    ['login-dark.png', '02', 'Darkmode', 'Dein Modus, vom ersten Moment an.', 'dark'],
-    ['registration-light.png', '03', 'Registrierung', 'Ein stimmiger Einstieg.', 'light'],
-    ['account.png', '04', 'Account Console', 'Das eigene Konto im gleichen Design.', 'dark console'],
-    ['admin.png', '05', 'Administration', 'Originale Funktionen. Dein Branding.', 'light console'],
-    ['mobile-dark.png', '06', 'Auch mobil', 'GoodUI auf jedem Bildschirm.', 'dark mobile'],
+    ['login-light.png', '01', 'Sign in', 'Light. Clean. Familiar.', 'light'],
+    ['login-dark.png', '02', 'Dark mode', 'Your preference, from the first moment.', 'dark'],
+    ['registration-light.png', '03', 'Registration', 'A consistent welcome.', 'light'],
+    ['account.png', '04', 'Account Console', 'Your account, with the same familiar design.', 'dark console'],
+    ['admin.png', '05', 'Administration', 'Original features. Your branding.', 'light console'],
+    ['mobile-dark.png', '06', 'Mobile ready', 'GoodUI on every screen.', 'dark mobile'],
   ];
   const markup = await Promise.all(cards.map(async ([file, number, title, caption, classes]) => `
     <article class="card ${classes}">
@@ -76,8 +76,8 @@ try {
       <div class="shot"><img src="${await dataUrl(path.join(views, file))}" alt="${title}"></div>
       <p>${caption}</p>
     </article>`));
-  const page = await browser.newPage({viewport: {width: 1800, height: 1510}, deviceScaleFactor: 1});
-  await page.setContent(`<!doctype html><html lang="de"><head><meta charset="utf-8"><style>
+  const page = await browser.newPage({locale: 'en-US', viewport: {width: 1800, height: 1510}, deviceScaleFactor: 1});
+  await page.setContent(`<!doctype html><html lang="en-US"><head><meta charset="utf-8"><style>
     * { box-sizing: border-box; }
     body { margin: 0; color: #fafafa; font-family: Arial, sans-serif; background: #0b1020;
       background-image: radial-gradient(ellipse at 85% 0%, #183b85 0%, transparent 47%), radial-gradient(ellipse at 0% 100%, #142c52 0%, transparent 45%); }
@@ -110,11 +110,11 @@ try {
     footer p { color: #9db0d0; margin: 0; font-size: 17px; }
     footer strong { color: #c6dcff; font-size: 19px; font-weight: 500; }
   </style></head><body><main>
-    <div class="intro"><div><p class="eyebrow">GOODUI × KEYCLOAK</p><h1>Dein Login. Dein Look.</h1>
-    <p class="summary">Ein durchgängiges Design. Hell, dunkel und mobil.</p></div>
+    <div class="intro"><div><p class="eyebrow">GOODUI × KEYCLOAK</p><h1>Your login. Your look.</h1>
+    <p class="summary">One consistent design. Light, dark, and mobile.</p></div>
     <div class="brand"><img src="${logo}" alt="GoodUI"><p>KEYCLOAK THEME</p></div></div>
     <div class="grid">${markup.join('')}</div>
-    <footer><p>Farben und Logos anpassen. Deinen Auftritt gestalten.</p><strong>Mehr entdecken → goodui.cloudfrogger.com</strong></footer>
+    <footer><p>Customize colors and logos. Make it yours.</p><strong>Explore more → goodui.cloudfrogger.com</strong></footer>
   </main></body></html>`, {waitUntil: 'load'});
   await ready(page);
   await page.locator('main').screenshot({path: path.join(root, 'docs/theme-collage.png')});

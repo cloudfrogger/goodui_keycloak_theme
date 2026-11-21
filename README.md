@@ -4,111 +4,111 @@
 [![GitHub Actions](https://github.com/cloudfrogger/goodui_keycloak_theme/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/cloudfrogger/goodui_keycloak_theme/actions/workflows/check.yml)
 [![Docker Hub](https://img.shields.io/docker/v/cloudfrogger/goodui-keycloak-theme?label=Docker%20Hub)](https://hub.docker.com/r/cloudfrogger/goodui-keycloak-theme)
 
-![GoodUI für Keycloak: Anmeldung in Hell und Dunkel, Registrierung, Konto, Administration und mobile Ansicht](docs/theme-collage.png)
+![GoodUI for Keycloak: light and dark sign-in, registration, account management, administration, and mobile views](docs/theme-collage.png)
 
-Native Keycloak-Themes im Stil von [GoodUI](https://goodui.cloudfrogger.com): klare Flächen, blaue Akzente, feine Rahmen und gerundete Bedienelemente. Hell, Dunkel und automatische Systemauswahl. Ohne Angular, zusätzliche Keycloak-Erweiterung oder externe Webfonts.
+Native Keycloak themes styled to match [GoodUI](https://goodui.cloudfrogger.com): clean surfaces, blue accents, subtle borders, and rounded controls. Includes light mode, dark mode, and automatic system preferences. No Angular application, additional Keycloak extension, or external web fonts required.
 
-**Entdecke das Designsystem hinter dem Theme: [goodui.cloudfrogger.com](https://goodui.cloudfrogger.com) — mit weiteren Informationen zu GoodUI und seinen Komponenten.**
+**Explore the design system behind this theme at [goodui.cloudfrogger.com](https://goodui.cloudfrogger.com), with more information about GoodUI and its components.**
 
-## Umfang und Basis
+## Features and compatibility
 
-Entwickelt und lokal getestet mit **Keycloak 26.8.2**. Die originalen Keycloak-Themes werden erweitert; Authentifizierungsabläufe und React-Konsolen bleiben Keycloak-Code.
+Developed and tested locally with **Keycloak 26.8.2**. The themes extend Keycloak's original themes, preserving its authentication flows and React consoles.
 
-| Bereich | Eltern-Theme | Anpassung |
+| Area | Parent theme | Customization |
 | --- | --- | --- |
-| Login | `keycloak.v2` | Gemeinsames Layout, GoodUI-Bedienelemente, Logos, Modusauswahl |
-| Konto | `keycloak.v3` | Originale Account Console, GoodUI-Farben, Logos und Darkmode |
-| Administration | `keycloak.v2` | Originale Admin Console mit GoodUI-Branding |
-| E-Mail | `keycloak` | Gemeinsames HTML-Layout, Inline-Stile und Darkmode nach Mailclient |
-| Willkommen | `keycloak` | Originale Willkommensseite mit GoodUI-Branding |
+| Login | `keycloak.v2` | Shared layout, GoodUI controls, logos, and appearance selector |
+| Account | `keycloak.v3` | Original Account Console with GoodUI colors, logos, and dark mode |
+| Administration | `keycloak.v2` | Original Admin Console with GoodUI branding |
+| Email | `keycloak` | Shared HTML layout, inline styles, and email client support for dark mode |
+| Welcome | `keycloak` | Original welcome page with GoodUI branding |
 
-Das Login-Layout gilt für alle geerbten Seiten, darunter Anmeldung, Registrierung, Passwortreset/-änderung, E-Mail-Verifikation, OTP/MFA, Wiederherstellungscodes, Passkeys/WebAuthn, Identity Provider, Zustimmungs-, Fehler- und Informationsseiten. Bestehende Übersetzungen und Plaintext-E-Mails werden geerbt. Für den zusätzlichen Moduswähler sind Deutsch und Englisch enthalten; weitere Übersetzungen können in `login/messages/` ergänzt werden.
+The login layout applies to all inherited pages, including sign-in, registration, password resets and updates, email verification, OTP/MFA, recovery codes, passkeys/WebAuthn, identity providers, consent screens, errors, and information pages. Existing translations and plain-text emails are inherited. The additional appearance selector includes English and German translations; add other languages in `login/messages/`.
 
-Die Account- und Admin-Konsole behalten Aufbau, Navigation und Funktionen des Originals. Ihre visuelle Anpassung erfolgt über CSS, nicht über einen eigenen React-Build. Herkunft und Version der überschriebenen Layouts stehen in [NOTICE](NOTICE). Grundlagen: [Keycloak Theme-Dokumentation](https://www.keycloak.org/ui-customization/themes), [Keycloak-Quellcode](https://github.com/keycloak/keycloak/tree/26.8.2).
+The Account and Admin Consoles retain the original layout, navigation, and features. Their appearance is customized with CSS rather than a separate React build. [NOTICE](NOTICE) records the source and version of the overridden layouts. References: [Keycloak theme documentation](https://www.keycloak.org/ui-customization/themes) and [Keycloak source code](https://github.com/keycloak/keycloak/tree/26.8.2).
 
-## Lokal ausprobieren
+## Try it locally
 
-Voraussetzungen: Docker mit Compose. Node.js 20+ und Python 3 werden nur für Tests beziehungsweise Paketbau benötigt.
+Requirements: Docker with Compose. Node.js 20+ and Python 3 are only required for testing and packaging.
 
 ```sh
 docker compose up -d
 ```
 
-Nach dem ersten Start:
+After the initial startup:
 
-- [Login, hell](http://localhost:8089/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&theme_mode=light)
-- [Login, dunkel](http://localhost:8089/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&theme_mode=dark)
-- [Konto](http://localhost:8089/realms/goodui/account/?theme_mode=dark): `demo` / `demo-change-me`
+- [Sign-in, light](http://localhost:8089/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&theme_mode=light)
+- [Sign-in, dark](http://localhost:8089/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid&theme_mode=dark)
+- [Account Console](http://localhost:8089/realms/goodui/account/?theme_mode=dark): `demo` / `demo-change-me`
 - [Administration](http://localhost:8089/admin/): `admin` / `local-admin-change-me`
-- [Willkommensseite](http://localhost:8089/?theme_mode=dark)
+- [Welcome page](http://localhost:8089/?theme_mode=dark)
 
-Der Demo-Client zeigt nach erfolgreicher Anmeldung auf `/callback`; dort gibt es keine Demo-Anwendung. Die vollständige Anmeldung lässt sich über die Account Console ausprobieren.
+After a successful sign-in, the demo client redirects to `/callback`, which does not host a demo application. Use the Account Console to try the complete sign-in flow.
 
-Die Instanz lauscht ausschließlich auf `127.0.0.1:8089`. Zugangsdaten, H2-Datenbank und abgeschaltete Theme-Caches sind für lokale Entwicklung gedacht. `docker compose down` entfernt diese lokale Instanz einschließlich ihrer im Container gespeicherten Änderungen. Der Demo-Realm wird beim nächsten Start neu importiert. Bereits importierte Realms werden bei einem einfachen Neustart nicht überschrieben.
+The instance listens only on `127.0.0.1:8089`. Its credentials, H2 database, and disabled theme caches are intended for local development. `docker compose down` removes this local instance and any changes stored in its container. The demo realm is imported again on the next startup. Restarting an existing instance does not overwrite realms that have already been imported.
 
-## Installation auf einem Keycloak-Server
+## Install on a Keycloak server
 
-### Verzeichnisinstallation
+### Directory installation
 
-`themes/goodui` vollständig nach `/opt/keycloak/themes/goodui` kopieren oder als schreibgeschütztes Volume einhängen:
+Copy the entire `themes/goodui` directory to `/opt/keycloak/themes/goodui`, or mount it as a read-only volume:
 
 ```yaml
 volumes:
   - ./themes/goodui:/opt/keycloak/themes/goodui:ro
 ```
 
-Danach unter **Realm Settings → Themes** für Login, Account, Admin und Email jeweils `goodui` auswählen. Jede Auswahl ist unabhängig. Für das Branding der Master-Administration auch im Realm `master` das Admin-Theme setzen; dessen Login-Theme bestimmt die Administrator-Anmeldeseite.
+Under **Realm Settings → Themes**, select `goodui` for Login, Account, Admin, and Email. Each selection is independent. To brand the master administration console, also set the Admin theme in the `master` realm. That realm's Login theme controls the administrator sign-in page.
 
-Die Willkommensseite wird serverweit aktiviert:
+Enable the welcome page server-wide:
 
 ```sh
 /opt/keycloak/bin/kc.sh start --spi-theme--welcome-theme=goodui
 ```
 
-### JAR oder ZIP bauen
+### Build a JAR or ZIP
 
 ```sh
 python3 scripts/sync-resources.py
 python3 scripts/build.py
 ```
 
-Der Paketbau synchronisiert die Web-Ressourcen ebenfalls automatisch. Erzeugt ohne Java-/Maven-Build:
+Packaging also synchronizes the web resources automatically. No Java or Maven build is required. The output includes:
 
-- `dist/goodui-keycloak-theme.jar`: nach `/opt/keycloak/providers/` kopieren, anschließend `kc.sh build` ausführen und Keycloak neu starten. In einem optimierten Container das JAR **vor** dessen Build-Schritt hinzufügen.
-- `dist/goodui-keycloak-theme.zip`: nach `/opt/keycloak/themes/` entpacken; enthält den Ordner `goodui/`.
+- `dist/goodui-keycloak-theme.jar`: copy it to `/opt/keycloak/providers/`, run `kc.sh build`, and restart Keycloak. For an optimized container, add the JAR **before** the Keycloak build step.
+- `dist/goodui-keycloak-theme.zip`: extract it into `/opt/keycloak/themes/`. The archive contains the `goodui/` directory.
 
-Nur eine Installationsvariante für denselben Theme-Namen einsetzen. In Produktion die Standard-Caches aktiv lassen. Nach Austausch gecachter Theme-Ressourcen Keycloak neu starten und gegebenenfalls den Theme-Gzip-Cache der betroffenen Instanz erneuern. CI stellt beide Pakete als Workflow-Artefakte bereit.
+Use one installation method for a given theme name. Keep the default caches enabled in production. After replacing cached theme resources, restart Keycloak and refresh the affected instance's theme gzip cache if necessary. CI provides both packages as workflow artifacts.
 
-## Keycloak mit Docker betreiben
+## Run Keycloak with Docker
 
-### Theme in einen bestehenden Container einbinden
+### Mount the theme in an existing container
 
-Dieses Repository auf dem Docker-Host auschecken. Das Theme liegt anschließend unter `themes/goodui`. Nach eigenen Branding-Änderungen zuerst `python3 scripts/sync-resources.py` ausführen.
+Check out this repository on the Docker host. The theme is located in `themes/goodui`. After changing the branding, run `python3 scripts/sync-resources.py` first.
 
-In der vorhandenen Compose-Datei des Keycloak-Dienstes das Theme-Verzeichnis ergänzen:
+Add the theme directory to the Keycloak service in your existing Compose file:
 
 ```yaml
 services:
   keycloak:
-    # Vorhandenes Image, Datenbank, Umgebungsvariablen und Ports beibehalten.
+    # Keep the existing image, database, environment variables, and ports.
     volumes:
       - ./goodui_keycloak_theme/themes/goodui:/opt/keycloak/themes/goodui:ro
 ```
 
-Der linke Pfad ist relativ zur Compose-Datei. Bei einer anderen Ablage entsprechend einen absoluten Host-Pfad verwenden. Rechts muss genau `/opt/keycloak/themes/goodui` stehen: Darin liegen unmittelbar `login/`, `account/`, `admin/`, `email/` und `welcome/`. Das zusätzliche Volume ergänzt vorhandene Volumes, insbesondere für Daten; es ersetzt sie nicht. Nur diesen Theme-Unterordner mounten, nicht das gesamte Verzeichnis `/opt/keycloak/themes`.
+The host path on the left is relative to the Compose file. Use an absolute host path if you store the repository elsewhere. The container path must be `/opt/keycloak/themes/goodui`, containing `login/`, `account/`, `admin/`, `email/`, and `welcome/` directly. Add this mount alongside existing volumes, including data volumes. Mount only this theme's subdirectory, leaving the rest of `/opt/keycloak/themes` available.
 
-Den betroffenen Dienst mit der ergänzten Konfiguration neu erstellen:
+Re-create the affected service with the updated configuration:
 
 ```sh
 docker compose up -d keycloak
 docker compose exec keycloak ls /opt/keycloak/themes/goodui
 ```
 
-Anschließend im gewünschten Realm unter **Realm Settings → Themes** `goodui` aktivieren. Die Montage allein ändert das ausgewählte Theme nicht. Die optional angepasste Willkommensseite erfordert zusätzlich das Startargument `--spi-theme--welcome-theme=goodui`; die übrigen vorhandenen Startargumente beibehalten.
+Then enable `goodui` under **Realm Settings → Themes** in the target realm. Mounting the files does not change the selected theme. To use the customized welcome page, also add `--spi-theme--welcome-theme=goodui` to the existing startup arguments.
 
-### Eigenständiges Docker-Beispiel zum Ausprobieren
+### Standalone Docker example
 
-Aus dem Stammverzeichnis dieses Repositorys:
+Run this command from the repository root:
 
 ```sh
 docker run --rm --name keycloak-goodui-demo \
@@ -121,93 +121,93 @@ docker run --rm --name keycloak-goodui-demo \
   start-dev --import-realm --spi-theme--welcome-theme=goodui
 ```
 
-Danach [http://localhost:8091/realms/goodui/account/?theme_mode=dark](http://localhost:8091/realms/goodui/account/?theme_mode=dark) öffnen und mit `demo` / `demo-change-me` anmelden. Der importierte Demo-Realm verwendet das Theme bereits. Der Beispiel-Client `theme-preview` bleibt auf Port 8089 konfiguriert; für dieses Beispiel deshalb die Account Console verwenden. Beim Stoppen wird der Demo-Container entfernt; seine Daten sind nicht dauerhaft gespeichert. Für den regulären Betrieb die bestehende Datenbank und Serverkonfiguration verwenden.
+Open [http://localhost:8091/realms/goodui/account/?theme_mode=dark](http://localhost:8091/realms/goodui/account/?theme_mode=dark) and sign in with `demo` / `demo-change-me`. The imported demo realm already uses the theme. The `theme-preview` client remains configured for port 8089, so use the Account Console for this example. Stopping the demo removes its container; its data is not persistent. For regular operation, use your existing database and server configuration.
 
-### Fertiges Image von Docker Hub verwenden
+### Use the ready-to-run Docker Hub image
 
-Das vollständige Keycloak-Image mit eingebautem Theme ist auf [Docker Hub: cloudfrogger/goodui-keycloak-theme](https://hub.docker.com/r/cloudfrogger/goodui-keycloak-theme) verfügbar:
+The complete Keycloak image with the theme installed is available on [Docker Hub: cloudfrogger/goodui-keycloak-theme](https://hub.docker.com/r/cloudfrogger/goodui-keycloak-theme):
 
 ```sh
 docker pull cloudfrogger/goodui-keycloak-theme:26.8.2
 ```
 
-Enthalten sind Keycloak **26.8.2**, das Theme-JAR, ein abgeschlossener Keycloak-Build für **PostgreSQL** sowie aktivierte Health- und Metrics-Endpunkte. Standardmäßig startet das Image mit `start --optimized` und der GoodUI-Willkommensseite. Es enthält keine Benutzer, Demo-Passwörter oder Datenbank. Plattform: **linux/amd64**.
+The image includes Keycloak **26.8.2**, the theme JAR, an optimized Keycloak build for **PostgreSQL**, and enabled health and metrics endpoints. By default, it runs `start --optimized` with the GoodUI welcome page. It contains no users, demo passwords, or database. Supported platform: **linux/amd64**.
 
-| Image-Tag | Bedeutung |
+| Image tag | Meaning |
 | --- | --- |
-| `latest` | Letzter erfolgreicher Build von `main` |
-| `26.8.2` | Letzter erfolgreicher `main`-Build für diese Keycloak-Version |
-| `sha-<vollständiger-Commit>` | Eindeutige Build-Version für reproduzierbare Deployments |
-| `0.1.0` bei Git-Tag `v0.1.0` | Version des Themes; wird bei einem entsprechenden Release-Tag erzeugt |
+| `latest` | Latest successful build from `main` |
+| `26.8.2` | Latest successful `main` build for this Keycloak version |
+| `sha-<full-commit>` | Commit-specific tag for selecting a particular source revision |
+| `0.1.0`, from Git tag `v0.1.0` | Theme version, published when the corresponding release tag is pushed |
 
-`latest` und `26.8.2` werden bei neuen erfolgreichen Builds aktualisiert. Zum Festschreiben einer konkreten Version den Commit-Tag oder Image-Digest verwenden; veröffentlichte Tags stehen für `main` im Drone-Build und auf Docker Hub; Release-Tags stehen zusätzlich im GitHub-Actions-Lauf.
+Successful builds update `latest` and `26.8.2`. Use a commit tag or image digest to select a specific version. For `main`, published tags appear in the Drone build and on Docker Hub. Release tags also appear in the GitHub Actions run.
 
-Ein vollständiges Compose-Beispiel mit dauerhaft gespeicherter PostgreSQL-Datenbank liegt in [compose.hub.yaml](compose.hub.yaml):
+[compose.hub.yaml](compose.hub.yaml) provides a complete Compose example with a persistent PostgreSQL database:
 
 ```sh
 cp .env.example .env
-# In .env beide Beispiel-Passwörter durch eigene Passwörter ersetzen.
+# Replace both example passwords in .env with your own passwords.
 docker compose -p goodui-hub -f compose.hub.yaml up -d
 docker compose -p goodui-hub -f compose.hub.yaml logs -f keycloak
 ```
 
-Falls bereits eine `.env` existiert, die benötigten Werte aus [.env.example](.env.example) ergänzen, statt die Datei zu ersetzen. Anschließend [http://localhost:8091/admin/](http://localhost:8091/admin/) öffnen und das Theme im gewünschten Realm aktivieren. Das Beispiel importiert keine Demo-Benutzer. Die Datenbank liegt im benannten Volume `goodui-hub_goodui-postgres-data` und bleibt bei einem normalen `docker compose down` erhalten.
+If you already have an `.env` file, add the required values from [.env.example](.env.example) instead of replacing it. Then open [http://localhost:8091/admin/](http://localhost:8091/admin/) and enable the theme in the target realm. This example does not import demo users. The database is stored in the named volume `goodui-hub_goodui-postgres-data`, which survives a normal `docker compose down`.
 
-Bei einer bereits vorhandenen PostgreSQL-Installation genügt es, das Image des bestehenden Keycloak-Dienstes auf `cloudfrogger/goodui-keycloak-theme:26.8.2` zu setzen, `start --optimized` zu verwenden und die bestehende Datenbank-/Secret-Konfiguration beizubehalten. Ein Theme-Volume ist dann nicht mehr erforderlich. Für öffentliche Installationen Hostname sowie TLS-/Proxy-Konfiguration an die eigene Umgebung anpassen; das Compose-Beispiel lauscht lokal auf Port 8091.
+If PostgreSQL is already installed, change the image of your existing Keycloak service to `cloudfrogger/goodui-keycloak-theme:26.8.2`, use `start --optimized`, and keep the existing database and secret configuration. A theme volume is no longer required. For public installations, configure the hostname and TLS/proxy settings for your environment. The Compose example listens locally on port 8091.
 
-### Eigenes Image mit eigenem Branding bauen
+### Build an image with your own branding
 
-Der mitgelieferte [Dockerfile](Dockerfile) baut das Theme direkt aus den Quellen, nimmt das JAR vor `kc.sh build` in Keycloak auf und erzeugt das optimierte Laufzeit-Image. Auf dem Docker-Host sind dafür weder Python noch Node.js oder ein vorhandenes `dist/`-Verzeichnis nötig:
+The included [Dockerfile](Dockerfile) builds the theme directly from source, installs the JAR before `kc.sh build`, and produces the optimized runtime image. The Docker host does not need Python, Node.js, or an existing `dist/` directory:
 
 ```sh
 docker build -t my-keycloak-goodui:26.8.2 .
 ```
 
-Nach Änderungen an Farben oder Logos reicht ein erneuter Image-Build. Für eine andere Datenbank `KC_DB` in den beiden Keycloak-Stufen des Dockerfiles anpassen und neu bauen. Zugangsdaten erst beim Start übergeben. Der Docker-Build-Kontext enthält ausschließlich Theme- und Build-Dateien; `.env`, Git-Daten, Demo-Realm und Screenshots werden ausgeschlossen. Grundlage ist die [offizielle Container-Dokumentation von Keycloak](https://www.keycloak.org/server/containers).
+Rebuild the image after changing colors or logos. To use a different database, update `KC_DB` in both Keycloak stages of the Dockerfile and rebuild. Supply credentials at runtime. The Docker build context includes only theme and build files; it excludes `.env`, Git metadata, the demo realm, and screenshots. This setup follows the [official Keycloak container documentation](https://www.keycloak.org/server/containers).
 
-### Automatischer Build und Push zu Docker Hub
+### Automated builds and Docker Hub publishing
 
-Die [Drone-Pipeline](.drone.yml) prüft bei Pushes auf `main` die Theme-Tests und den Paketbau. Anschließend baut Kaniko das vollständige Docker-Image und veröffentlicht es auf Docker Hub. [GitHub Actions](.github/workflows/check.yml) prüft unabhängig davon die Browserabläufe sowie das optimierte Image mit PostgreSQL. Ein Drone-Push auf `main` wartet derzeit nicht auf das Ergebnis dieser unabhängigen Browserprüfungen.
+The [Drone pipeline](.drone.yml) runs the theme tests and packages the theme for pushes to `main`. Kaniko then builds the complete Docker image and publishes it to Docker Hub. [GitHub Actions](.github/workflows/check.yml) independently checks browser flows and the optimized image with PostgreSQL. A Drone publication from `main` currently does not wait for those independent browser checks.
 
-- Push auf `main`: Drone veröffentlicht als `latest`, `26.8.2` und `sha-<Commit>`.
-- Push eines Git-Tags wie `v0.1.0`: GitHub Actions veröffentlicht nach Browserprüfungen als `0.1.0` und `sha-<Commit>`; `latest` wird dabei nicht geändert.
-- Pull Requests und andere Branches: GitHub Actions baut und testet ohne Docker-Hub-Push.
-- Manueller GitHub-Workflow-Start auf `main`: Tests ohne Docker-Hub-Push.
+- Push to `main`: Drone publishes `latest`, `26.8.2`, and `sha-<commit>`.
+- Push a Git tag such as `v0.1.0`: after browser checks pass, GitHub Actions publishes `0.1.0` and `sha-<commit>`, leaving `latest` unchanged.
+- Pull requests and other branches: GitHub Actions builds and tests without publishing to Docker Hub.
+- Manually run the GitHub workflow on `main`: run tests without publishing to Docker Hub.
 
-Drone verwendet für `main` ein repo-spezifisch verschlüsseltes `dockerhub_token` in `.drone.yml`. GitHub Actions verwendet für Release-Tags weiterhin die Repository-Variable `DOCKERHUB_USERNAME` und das Repository-Secret `DOCKERHUB_TOKEN`. In einem Fork müssen die Bildnamen und Zugänge an den eigenen Docker-Hub-Namespace angepasst werden.
+For `main`, Drone uses the repository-specific encrypted `dockerhub_token` in `.drone.yml`. For release tags, GitHub Actions uses the repository variable `DOCKERHUB_USERNAME` and repository secret `DOCKERHUB_TOKEN`. In a fork, update the image names and credentials for your own Docker Hub namespace.
 
-Die Image-Prüfungen lassen sich lokal in einer getrennten Testinstanz wiederholen:
+To repeat the image checks locally in an isolated test instance:
 
 ```sh
 docker build -t goodui-keycloak-theme:test .
 docker compose -p goodui-image-test -f compose.image-test.yaml up -d
-# Warten, bis Keycloak vollständig gestartet ist.
+# Wait until Keycloak has finished starting.
 KEYCLOAK_BASE_URL=http://localhost:8092 npm run test:e2e
 docker compose -p goodui-image-test -f compose.image-test.yaml down -v
 ```
 
-`compose.image-test.yaml` verwendet ausschließlich lokale Demo-Zugangsdaten und einen separaten Test-Stack. Das abschließende `down -v` entfernt dessen Testdatenbank. Die Testinstanz darf keine produktive Datenbank verwenden.
+`compose.image-test.yaml` uses local demo credentials and a separate test stack. The final `down -v` removes its test database. Never connect this test instance to a production database.
 
-## Keycloak mit YAML unter Kubernetes betreiben
+## Run Keycloak on Kubernetes with YAML
 
-### Bestehendes Keycloak-Deployment erweitern
+### Update an existing Keycloak deployment
 
-Das fertige Docker-Hub-Image enthält das Theme bereits. Wenn das bestehende Deployment ebenfalls Keycloak 26.8.2 mit PostgreSQL verwendet, im Deployment dessen Keycloak-Image durch die eigene Image-Version ersetzen. Vorhandene Datenbank, Secrets, Services und Ingress-Konfiguration behalten. Die bestehenden Build-Optionen und Erweiterungen ebenfalls in das eigene Image übernehmen, falls das bisherige Image solche enthält.
+The Docker Hub image already includes the theme. If your existing deployment also uses Keycloak 26.8.2 with PostgreSQL, replace its Keycloak image with the desired image version. Keep the existing database, secrets, services, and Ingress configuration. If the previous image included additional build options or extensions, include those in your custom image as well.
 
-Ein Imagewechsel allein erfordert keinen Realm-Import und keine neue Datenbank. Nach dem Rollout im jeweiligen Realm das Theme `goodui` auswählen. Bei Betrieb über einen Keycloak-Operator oder Helm das Image in der zugehörigen Custom Resource beziehungsweise den Helm-Values setzen, damit der Controller die Änderung nicht zurücksetzt.
+Changing the image does not require a realm import or a new database. After the rollout, select the `goodui` theme in each target realm. If you use a Keycloak Operator or Helm, update the image in the corresponding custom resource or Helm values so the controller preserves the change.
 
-Ein Docker-Host-Pfad wie `./themes/goodui` lässt sich nicht direkt als Kubernetes-Volume verwenden. Das eingebaute Theme im Image ist auf jedem Node und in jedem Pod vorhanden; dafür ist weder `hostPath` noch ein zusätzliches Persistent Volume erforderlich. Die Datenbank benötigt unabhängig davon ihre eigene dauerhafte Speicherung.
+A Docker host path such as `./themes/goodui` cannot be used directly as a Kubernetes volume. Bundling the theme in the image makes it available on every node and in every pod, without `hostPath` or an additional persistent volume. The database still requires its own persistent storage.
 
-### Beispiel: Deployment, Secret, Service und TLS-Ingress
+### Example: Deployment, Secret, Service, and TLS Ingress
 
-Vorausgesetzt sind eine erreichbare PostgreSQL-Datenbank, ein installierter Ingress-Controller und ein TLS-Secret für den öffentlichen Hostnamen. Das öffentliche Image wird direkt von Docker Hub geladen; eine eigene Registry ist dafür nicht nötig. Das Beispiel verwendet einen einzelnen Keycloak-Pod und bildet keinen HA-Cluster ab.
+Requirements: an accessible PostgreSQL database, an installed Ingress controller, and a TLS secret for the public hostname. The public image is pulled directly from Docker Hub, so a private registry is not required. This example uses one Keycloak pod and does not configure a high-availability cluster.
 
-Die folgenden Platzhalter an die eigene Umgebung anpassen und den Block als `keycloak-goodui.yaml` speichern:
+Adjust these values for your environment and save the following manifest as `keycloak-goodui.yaml`:
 
-- Image `cloudfrogger/goodui-keycloak-theme:26.8.2` oder einen konkreten Commit-Tag aus Docker Hub verwenden.
-- Hostname `login.example.org`, Ingress-Klasse `nginx` und TLS-Secret `keycloak-tls`.
-- JDBC-Adresse und Zugangsdaten in `keycloak-runtime`. Die PostgreSQL-Datenbank muss bereits existieren.
-- Die Bootstrap-Admin-Daten dienen der Ersteinrichtung einer neuen Instanz. Bei einem vorhandenen Admin-Konto gelten weiterhin dessen Zugangsdaten.
+- Use `cloudfrogger/goodui-keycloak-theme:26.8.2` or a specific commit tag from Docker Hub.
+- Set the hostname `login.example.org`, Ingress class `nginx`, and TLS secret `keycloak-tls` to match your environment.
+- Update the JDBC URL and credentials in `keycloak-runtime`. The PostgreSQL database must already exist.
+- Bootstrap administrator credentials are used to initialize a new instance. An existing administrator account keeps its current credentials.
 
 ```yaml
 apiVersion: v1
@@ -259,7 +259,7 @@ spec:
           env:
             - name: KC_HOSTNAME
               value: https://login.example.org
-            # HTTPS endet am Ingress; dessen Verbindung zu Keycloak nutzt HTTP.
+            # TLS terminates at the Ingress; it connects to Keycloak over HTTP.
             - name: KC_HTTP_ENABLED
               value: "true"
             - name: KC_PROXY_HEADERS
@@ -330,11 +330,11 @@ spec:
                   name: http
 ```
 
-Das TLS-Secret muss im Namespace `identity` liegen. Bei einer privaten Registry zusätzlich ein vorhandenes Pull-Secret über `spec.template.spec.imagePullSecrets` am Deployment referenzieren. Die Datei mit echten Kennwörtern nicht ins Git-Repository übernehmen; vorhandene Secret-Verwaltung kann das gezeigte Secret ersetzen.
+The TLS secret must exist in the `identity` namespace. For a private registry, also reference an existing pull secret through `spec.template.spec.imagePullSecrets` in the Deployment. Keep files containing real passwords out of Git. Your existing secret management system can replace the Secret shown here.
 
-Der Ingress muss `X-Forwarded-*`-Header selbst korrekt setzen und eingehende gleichnamige Header überschreiben. Der Pod-Zugriff ist im Zielcluster passend auf Ingress und interne Verwaltungszugriffe einzuschränken. Der Service veröffentlicht ausschließlich den Anwendungsport; Port 9000 für Health/Metrics wird nicht über den Ingress freigegeben. Für andere TLS-/Proxy-Setups die Einstellungen anhand der [Keycloak-Proxy-Dokumentation](https://www.keycloak.org/server/reverseproxy) anpassen. Die Probe-Endpunkte sind in der [Keycloak-Health-Dokumentation](https://www.keycloak.org/observability/health) beschrieben.
+The Ingress must set `X-Forwarded-*` headers correctly and overwrite matching incoming headers. Restrict access to the pod to the Ingress and required internal administration traffic. The Service exposes only the application port; management port 9000 for health and metrics is not published through the Ingress. For other TLS/proxy setups, follow the [Keycloak reverse proxy documentation](https://www.keycloak.org/server/reverseproxy). Probe endpoints are described in the [Keycloak health documentation](https://www.keycloak.org/observability/health).
 
-Nach Anpassung der Platzhalter und Bereitstellung der Datenbank sowie des TLS-Secrets:
+After updating the placeholders and providing the database and TLS secret:
 
 ```sh
 kubectl apply -f keycloak-goodui.yaml
@@ -343,11 +343,11 @@ kubectl -n identity logs deployment/keycloak
 kubectl -n identity exec deployment/keycloak -- ls /opt/keycloak/providers/
 ```
 
-### Theme aktivieren und aktualisieren
+### Enable and update the theme
 
-Nach dem Start `https://login.example.org/admin/` öffnen. Im jeweiligen Realm unter **Realm Settings → Themes** für Login, Account, Admin und Email `goodui` auswählen und speichern. Für die Master-Administration die Auswahl im Realm `master` vornehmen. Die Willkommensseite wird durch das Startargument des Deployment-Beispiels aktiviert.
+After startup, open `https://login.example.org/admin/`. Under **Realm Settings → Themes**, select `goodui` for Login, Account, Admin, and Email, then save. For the master administration console, make these selections in the `master` realm. The startup argument in the Deployment example enables the welcome page.
 
-Bei automatisierter Realm-Provisionierung können diese Felder in der bestehenden Realm-Konfiguration gesetzt werden:
+For automated realm provisioning, set these fields in your existing realm configuration:
 
 ```json
 {
@@ -358,13 +358,13 @@ Bei automatisierter Realm-Provisionierung können diese Felder in der bestehende
 }
 ```
 
-Das ist ein Konfigurationsausschnitt, kein vollständiger Realm-Import. Für einen bestehenden Realm die Felder über die Admin-Konsole oder Admin-API aktualisieren; ein erneuter Start mit `--import-realm` überschreibt vorhandene Realms nicht.
+This is a configuration fragment, not a complete realm import. Update an existing realm through the Admin Console or Admin API. Restarting with `--import-realm` does not overwrite existing realms.
 
-Nach Änderungen an Farben, Logos oder Templates baut und veröffentlicht der Workflow das aktualisierte Image. Anschließend den neuen **Commit-Tag** aus der Workflow-Zusammenfassung in der YAML-Datei einsetzen; bei eigenen Builds einen neuen Image-Tag vergeben. Anschließend erneut `kubectl apply` und `kubectl rollout status` ausführen. So erhalten alle Pods dieselben Ressourcen, und Theme-Caches werden mit dem neuen Prozess neu aufgebaut. Bei `Recreate` entsteht während eines Updates eine Unterbrechung; für Hochverfügbarkeit ein entsprechend konfiguriertes Keycloak-Cluster-Deployment verwenden.
+After changes to colors, logos, or templates, the workflow builds and publishes the updated image. Set the new **commit tag** from the CI build in your YAML file. For custom builds, assign a new image tag. Then run `kubectl apply` and `kubectl rollout status` again. All pods receive the same resources, and the new processes rebuild their theme caches. The `Recreate` strategy causes downtime during updates; use an appropriately configured Keycloak cluster for high availability.
 
-## Hell-/Dunkelmodus ohne Aufblitzen
+## Light and dark modes without flashing
 
-Die Anwendung hängt `theme_mode` an die **Keycloak-Autorisierungs-URL** an:
+Your application appends `theme_mode` to the **Keycloak authorization URL**:
 
 ```text
 https://login.example.org/realms/my-realm/protocol/openid-connect/auth
@@ -375,30 +375,85 @@ https://login.example.org/realms/my-realm/protocol/openid-connect/auth
   &theme_mode=dark
 ```
 
-In der tatsächlichen URL werden keine Zeilenumbrüche oder Einrückungen verwendet.
+Use a single URL without line breaks or indentation in your application.
 
-| Wert | Verhalten |
+| Value | Behavior |
 | --- | --- |
-| `light` | Helles Theme, unabhängig vom Betriebssystem |
-| `dark` | Dunkles Theme, unabhängig vom Betriebssystem |
-| `system` | Systempräferenz; reagiert auf Änderungen des Betriebssystems |
-| Fehlt oder ungültig | Gespeicherte Auswahl, sonst Systempräferenz |
+| `light` | Light theme, regardless of the operating system preference |
+| `dark` | Dark theme, regardless of the operating system preference |
+| `system` | Follow the system preference, including operating system changes |
+| Missing or invalid | Use the saved preference, falling back to the system preference |
 
-`theme-init.js` steht als **synchrones klassisches Script im Head vor allen Stylesheets**. Es setzt `data-theme`, die PatternFly-Darkmode-Klasse und `color-scheme`, bevor die Seite gerendert wird. Das originale konkurrierende Systemmodus-Script wurde aus den Layouts entfernt. Kein `async`, `defer` oder `type="module"` ergänzen. Das Script wird vom eigenen Keycloak-Host geladen und benötigt keine zusätzliche Inline-Script-Freigabe in der CSP. Die originalen Keycloak-Scripts und deren CSP-Anforderungen bleiben bestehen.
+`theme-init.js` is a **synchronous classic script in the document head, before all stylesheets**. It sets `data-theme`, the PatternFly dark mode class, and `color-scheme` before the page renders. The original competing system preference script has been removed from the layouts. Do not add `async`, `defer`, or `type="module"`. The script is served by the same Keycloak host and requires no additional inline script permission in the CSP. Keycloak's original scripts and their CSP requirements still apply.
 
-Die Auswahl wird unter `goodui-keycloak-theme-mode` in `localStorage` gespeichert, mit `sessionStorage` als Rückfall. Dadurch bleibt sie bei Formular-POSTs, Sprachwechseln und Folgeseiten erhalten, auch wenn Keycloak den beliebigen URL-Parameter dort nicht weiterträgt. Der Login-Footer erlaubt die Auswahl; bei einem Wechsel bleiben OIDC- und Sitzungsparameter erhalten. Andere Tabs übernehmen Änderungen über das Storage-Event.
+The selection is saved as `goodui-keycloak-theme-mode` in `localStorage`, with `sessionStorage` as a fallback. This preserves the mode across form submissions, language changes, and subsequent pages, even when Keycloak does not forward this custom URL parameter. The login footer provides an appearance selector; switching modes preserves OIDC and session parameters. Other tabs synchronize changes through the storage event.
 
-Der Speicher gilt pro Browser-Origin, also für die Realms und Konsolen desselben Keycloak-Hosts. Die GoodUI-Anwendung und Keycloak auf verschiedenen Hosts teilen ihn nicht: die Anwendung muss die aktuelle Auswahl beim Login neu übergeben. Wenn der Browser beide Speicher vollständig sperrt, gilt die URL-Auswahl nur auf Seiten mit diesem Parameter; Folgeseiten verwenden sonst die Systempräferenz. E-Mails folgen ausschließlich den Fähigkeiten und Präferenzen des Mailclients.
+Storage is scoped to the browser origin, covering realms and consoles on the same Keycloak host. A GoodUI application on a different host does not share that storage: pass its current selection again when starting sign-in. If the browser blocks both storage mechanisms, the URL selection applies only to pages containing that parameter; subsequent pages otherwise follow the system preference. Emails use the capabilities and preferences of the email client.
 
-## Farben anpassen
+## Set the primary color through the URL
 
-Die zentrale Datei für alle **Web-Seiten** ist:
+Pass `theme_color` alongside `theme_mode` on the Keycloak authorization URL:
+
+```text
+https://login.example.org/realms/my-realm/protocol/openid-connect/auth
+  ?client_id=my-app
+  &redirect_uri=https%3A%2F%2Fapp.example.org%2Fcallback
+  &response_type=code
+  &scope=openid
+  &theme_mode=dark
+  &theme_color=7c3aed
+```
+
+Use a single URL without line breaks. The color must contain **exactly six hexadecimal digits, without `#`**, such as `7c3aed` (purple) or `15803d` (green). Uppercase hexadecimal digits are also accepted. A literal `#` starts a URL fragment, so omit it rather than including it in this parameter.
+
+When your OIDC client provides an authorization URL, add the presentation parameters while preserving its existing state, nonce, PKCE, and other parameters:
+
+```js
+const url = new URL(authorizationUrl); // Generated by your OIDC client.
+url.searchParams.set('theme_mode', 'dark');
+url.searchParams.set('theme_color', '7c3aed');
+window.location.assign(url.href);
+```
+
+| Parameter | Result |
+| --- | --- |
+| `theme_color=7c3aed` | Use purple as the primary color |
+| `theme_color=15803d` | Use green as the primary color |
+| `theme_color=default` | Clear the saved override and use the colors from `brand.css` |
+| Missing | Reuse a valid color saved for this realm in this tab, otherwise use `brand.css` |
+| Invalid | Ignore the value; keep a valid saved color or the configured default |
+
+The requested color replaces the default blue on primary buttons. Links, focus indicators, active navigation, and tab indicators use matching accents. The shared initializer applies the color **before the first paint**, across Login, Account, Admin, and Welcome. Switching light/dark modes preserves the primary color and recalculates the accent. Logo artwork and semantic status colors, such as errors and warnings, keep their own colors. Email branding remains controlled by the separate email template.
+
+The primary button background keeps the exact requested color. Button labels automatically use black or white, and the hover background increases their contrast. Link and focus colors are adjusted for light/dark mode. Calculations target at least **4.5:1 text contrast** on the standard GoodUI canvas and selected surfaces; this is not a claim of complete WCAG conformance. If you customize surface colors in `brand.css`, verify contrast against your own backgrounds. See the [WCAG contrast guidance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html).
+
+![Purple primary color in dark mode](docs/primary-color-dark.png)
+
+### Persistence and scope
+
+The override uses **`sessionStorage`, scoped by realm**, rather than permanent `localStorage`. It survives form submissions, registration, password resets, and navigation to the Account/Admin Consoles for that realm in the same tab. Realm-specific keys also work when Keycloak uses a path prefix. The server-wide welcome page uses a separate key.
+
+Your application should pass its chosen color or `theme_color=default` on every initial sign-in request. This explicitly replaces an earlier application's selection when multiple applications use the same realm in one tab. The value does not select a tenant or change realm configuration. Different hosts do not share the override; your application must manage its own colors separately.
+
+If session storage is blocked, a valid URL color still applies to the current page. Subsequent pages without that parameter use the configured default. Previously published Docker images do not gain this feature automatically: deploy a newly built theme or image containing this initializer.
+
+### Input validation and security
+
+The implementation accepts only `[0-9a-fA-F]{6}` or the explicit reset value `default`. Saved values are validated again when read. Color names, shorthand/alpha colors, CSS declarations, functions such as `url(...)`, HTML, and JavaScript are rejected.
+
+Only four fixed CSS custom properties are written through `style.setProperty`, using normalized or calculated hexadecimal colors. The value never becomes HTML, a stylesheet, a selector, a resource URL, or executable code. There are no new dependencies, network requests, server endpoints, or CSP relaxations. This follows the [OWASP guidance on safe CSS property values](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-css-contexts).
+
+This parameter controls appearance only. A color is not proof of application identity or authorization. Authentication actions, redirect validation, sessions, MFA, and OIDC security remain Keycloak's responsibility and are unchanged by the color override.
+
+## Customize colors
+
+The central branding file for all **web pages** is:
 
 ```text
 themes/goodui/login/resources/css/brand.css
 ```
 
-Beispiel für eine violette Marke:
+For example, to use a purple brand color:
 
 ```css
 :root {
@@ -412,20 +467,20 @@ Beispiel für eine violette Marke:
 }
 ```
 
-Die vorhandenen Variablen direkt ändern. `--good-color-brand` bestimmt primäre Schaltflächen, `--good-color-accent` Links und Fokusmarkierungen. Weitere Variablen steuern Canvas, Oberfläche, Text, Rahmen, gedämpften Text, Statusfarben, Schrift, Radien und Logobreite. Für beide Modi ausreichenden Kontrast wählen. Es werden keine Fonts von Drittanbietern geladen; Inter wird verwendet, wenn lokal vorhanden, sonst die Systemschrift.
+Edit the existing variables directly. `--good-color-brand` controls primary buttons; `--good-color-accent` controls links and focus indicators. Other variables control the canvas, surfaces, text, borders, muted text, status colors, font, corner radii, and logo width. Choose sufficient contrast in both modes. No third-party fonts are downloaded: Inter is used when installed locally, with system fonts as a fallback.
 
-Danach die Ressourcen verteilen und neu paketieren:
+Then synchronize the resources and rebuild the packages:
 
 ```sh
 python3 scripts/sync-resources.py
 python3 scripts/build.py
 ```
 
-Der Sync kopiert die kanonischen Dateien nach Account, Admin und Welcome. Nicht die generierten Kopien bearbeiten. Im lokalen Compose sind Änderungen unmittelbar verfügbar; bei einer produktiven Installation das vollständige Theme beziehungsweise JAR erneut ausliefern.
+The synchronization script copies the canonical files to Account, Admin, and Welcome. Edit the source files rather than the generated copies. Changes are available immediately in the local Compose setup. For production, deploy the updated theme directory or JAR.
 
-## Logos und Favicon anpassen
+## Customize logos and the favicon
 
-Am einfachsten diese drei Dateien ersetzen und ihre Namen beibehalten:
+The easiest option is to replace these three files while keeping their names:
 
 ```text
 themes/goodui/login/resources/img/goodui-logo-light.svg
@@ -433,15 +488,15 @@ themes/goodui/login/resources/img/goodui-logo-dark.svg
 themes/goodui/login/resources/img/favicon.svg
 ```
 
-Das helle Logo steht auf hellem Hintergrund, das dunkle auf dunklem Hintergrund. SVGs mit passender `viewBox` und transparentem Hintergrund verwenden. Die Breite lässt sich in `brand.css` über `--good-logo-width` ändern. Danach `scripts/sync-resources.py` und gegebenenfalls den Paketbau ausführen.
+The light logo appears on light backgrounds, and the dark logo appears on dark backgrounds. Use SVGs with an appropriate `viewBox` and a transparent background. Adjust `--good-logo-width` in `brand.css` to change the width. Then run `scripts/sync-resources.py` and rebuild the packages if needed.
 
-In `login/theme.properties` zusätzlich `brandName` für den Alternativtext setzen. Dort lassen sich auch `logoLight`, `logoDark` und `favicon` auf andere relative Dateipfade setzen. Diese abweichenden Login-Pfade gelten nur für Login: bei anderen Dateinamen auch die Logo-URLs in `css/console.css`, `welcome/index.ftl` und die `logo`-/`favIcon`-Eigenschaften in Account/Admin anpassen. Das Ersetzen unter den vorhandenen Dateinamen aktualisiert alle Web-Bereiche ohne diese zusätzlichen Änderungen.
+Set `brandName` in `login/theme.properties` to customize the image alt text. You can also set `logoLight`, `logoDark`, and `favicon` to other relative file paths. These custom paths apply only to Login. If you use different filenames, also update the logo URLs in `css/console.css` and `welcome/index.ftl`, plus the `logo` and `favIcon` properties for Account and Admin. Replacing the files under their existing names updates all web areas without those extra changes.
 
-Der kleine Name unter dem Logo kommt aus dem Anzeigenamen des Keycloak-Realms. Seitentitel, Formulartexte und Sprachen kommen weiterhin aus Keycloak.
+The small name below the logo comes from the Keycloak realm's display name. Page titles, form labels, and languages continue to come from Keycloak.
 
-### E-Mails branden
+### Brand your emails
 
-E-Mails verwenden bewusst eigene, mailtaugliche Inline-Stile in `themes/goodui/email/html/template.ftl`. Dort können Hintergrund, Rahmen, Schrift und die Darkmode-Farben geändert werden. `email/theme.properties` bietet:
+Emails use a separate layout with email-compatible inline styles in `themes/goodui/email/html/template.ftl`. Customize the background, borders, font, and dark mode colors there. `email/theme.properties` supports:
 
 ```properties
 parent=keycloak
@@ -449,9 +504,9 @@ logoUrl=https://static.example.org/brand/email-logo.png
 brandColor=#7c3aed
 ```
 
-`logoUrl` ist optional. Ohne URL wird nur der Realm-Name angezeigt. Für Bilder eine öffentlich erreichbare absolute HTTPS-Adresse verwenden; PNG funktioniert in vielen Mailclients zuverlässiger als SVG. Der Realm-Name wird durch Keycloak geliefert. Änderungen an Farben oder Web-Logos werden nicht automatisch in das E-Mail-Layout übertragen. Plaintext-Alternativen bleiben die Originale. Externe Bilder und Darkmode können vom Mailclient eingeschränkt werden.
+`logoUrl` is optional. When it is empty, the heading displays only the realm name. Use a publicly accessible absolute HTTPS URL for images. PNG works more reliably than SVG in many email clients. Keycloak supplies the realm name. Web color and logo changes are not automatically applied to the email layout. Plain-text alternatives remain the originals. Email clients may restrict external images and dark mode support.
 
-## Entwicklung und Prüfung
+## Development and verification
 
 ```sh
 npm ci
@@ -462,22 +517,22 @@ docker compose up -d
 npm run test:e2e
 ```
 
-**Browsertests ausschließlich gegen die lokale Demo ausführen.** Sie setzen die Themes in `goodui` und `master` und weisen dem Demo-Benutzer Account-Rollen zu. Die Basis-URL kann für isolierte CI-Instanzen mit `KEYCLOAK_BASE_URL` überschrieben werden; sie ist kein Werkzeug zum Prüfen produktiver Realms.
+**Run browser tests only against the local demo.** They set themes in `goodui` and `master`, configure the demo client's redirect URL, and assign account roles to the demo user. Override the base URL with `KEYCLOAK_BASE_URL` for isolated CI instances. These tests are not intended for production realms.
 
-Die Tests prüfen Moduspriorität, gesperrten Browser-Speicher, Systemwechsel, Erhalt von OIDC-Parametern, den ersten Paint, sichtbare Logos, fehlerhafte Anmeldung, Registrierung, Passwortreset, mobile Breite, echte Konto-/Admin-Anmeldung, Passwortänderung und vollständige TOTP-Einrichtung sowie die Willkommensseite. Lokal wurden sowohl die Verzeichnisinstallation als auch das eigenständig installierte JAR mit allen sechs Browserprüfungen getestet. Screenshots liegen in `docs/`. Die GitHub Action baut die Pakete und führt dieselben Browserprüfungen gegen Keycloak 26.8.2 aus.
+The tests cover URL color validation, CSS/HTML injection payload rejection, color persistence and reset, realm isolation, derived text contrast, colored console navigation, mode priority, blocked browser storage, system preference changes, preserved OIDC parameters, the first paint, visible logos, invalid credentials, registration, password resets, mobile widths, real Account/Admin sign-in, password updates, complete TOTP enrollment, and the welcome page. Both directory installation and standalone JAR installation have been tested locally with the browser test suite. Screenshots are stored in `docs/`. GitHub Actions builds the packages and runs the same browser checks against Keycloak 26.8.2, then tests the production image with PostgreSQL. Release tags are published after those checks; Drone publishes `main` independently as described above.
 
-Passkeys benötigen geeignete Browser-/Authenticator-Hardware; tatsächliche SMTP-Zustellung und die Darstellung in verschiedenen Mailclients sind separat zu prüfen. Diese Bereiche erben Keycloaks Implementierung und werden nicht durch die Browserprüfung allein als vollständig getestet betrachtet.
+Passkeys require appropriate browser/authenticator hardware. Actual SMTP delivery and rendering in different email clients require separate testing. These areas inherit Keycloak's implementation; browser checks alone do not establish that they have been fully tested.
 
-Bei einem Keycloak-Upgrade insbesondere `login/template.ftl`, `account/index.ftl`, `admin/index.ftl` und `welcome/index.ftl` gegen den jeweiligen Upstream vergleichen. Auch geerbte Formular-Klassen und die CSS-Anpassungen der React-Konsolen prüfen. Kompatibilität mit anderen Versionen wird nicht vorausgesetzt.
+When upgrading Keycloak, compare `login/template.ftl`, `account/index.ftl`, `admin/index.ftl`, and `welcome/index.ftl` with the corresponding upstream files. Also review inherited form classes and the CSS overrides for the React consoles. Compatibility with other versions is not assumed.
 
-Die Collage am Anfang dieser README besteht aus echten Screenshots der lokalen Keycloak-Demo. Nach Änderungen am Design lässt sie sich mit laufender Demo-Instanz und installiertem Playwright neu aufnehmen:
+The collage at the top of this README uses real screenshots of the local Keycloak demo. With the demo running and Playwright installed, regenerate it after design changes:
 
 ```sh
 node scripts/create-collage.mjs
 ```
 
-Das Script verwendet ausschließlich `http://localhost:8089`, meldet sich mit den lokalen Demo-Zugängen an und legt die Einzelansichten in `docs/views/` sowie die Collage unter `docs/theme-collage.png` ab. Es verändert keine Realm-Einstellungen.
+The script uses only `http://localhost:8089`, signs in with the local demo accounts, and saves individual views in `docs/views/` and the collage as `docs/theme-collage.png`. It captures the UI in American English and does not change realm settings.
 
-## Lizenz
+## License
 
-[Apache-2.0](LICENSE); die angepassten Keycloak-Layouts stammen aus dem gleich lizenzierten Upstream. GoodUI-Logos und Farbreferenzen stammen aus dem [GoodUI-Projekt](https://github.com/cloudfrogger/goodui); dessen [MIT-Lizenz](licenses/GoodUI-MIT.txt) liegt bei. Siehe [NOTICE](NOTICE). Markenrechte werden durch diese Lizenzen nicht übertragen.
+[Apache-2.0](LICENSE). The adapted Keycloak layouts come from the upstream project under the same license. GoodUI logos and color references come from the [GoodUI project](https://github.com/cloudfrogger/goodui); its [MIT license](licenses/GoodUI-MIT.txt) is included. See [NOTICE](NOTICE). These licenses do not grant trademark rights.
