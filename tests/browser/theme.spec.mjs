@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { createHmac } from 'node:crypto';
 let adminToken;
-const authPath = '/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=http%3A%2F%2Flocalhost%3A8089%2Fcallback&response_type=code&scope=openid';
+const baseURL = process.env.KEYCLOAK_BASE_URL || 'http://localhost:8089';
+const authPath = '/realms/goodui/protocol/openid-connect/auth?client_id=theme-preview&redirect_uri=' + encodeURIComponent(baseURL + '/callback') + '&response_type=code&scope=openid';
 test.beforeAll(async ({ request }) => {
   const response = await request.post('/realms/master/protocol/openid-connect/token', { form: {
     client_id:'admin-cli', grant_type:'password', username:'admin', password:'local-admin-change-me'
@@ -15,6 +16,9 @@ test.beforeAll(async ({ request }) => {
   }
   // Imported fixtures need explicit account roles; no production users are touched.
   const headers = {Authorization:'Bearer '+access_token};
+  const previews = await (await request.get('/admin/realms/goodui/clients?clientId=theme-preview',{headers})).json();
+  const configured = await request.put(`/admin/realms/goodui/clients/${previews[0].id}`,{headers,data:{redirectUris:[baseURL+'/*'],webOrigins:[baseURL]}});
+  expect(configured.ok()).toBeTruthy();
   const users = await (await request.get('/admin/realms/goodui/users?username=demo',{headers})).json();
   const clients = await (await request.get('/admin/realms/goodui/clients?clientId=account',{headers})).json();
   const roles = await (await request.get(`/admin/realms/goodui/clients/${clients[0].id}/roles`,{headers})).json();

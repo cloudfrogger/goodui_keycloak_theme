@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!.dockerignore
+!themes/
+!themes/**
+!scripts/
+!scripts/build.py
+!scripts/sync-resources.py
+!LICENSE
+!NOTICE
+!licenses/
+!licenses/**
