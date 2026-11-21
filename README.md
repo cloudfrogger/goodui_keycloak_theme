@@ -140,7 +140,7 @@ Enthalten sind Keycloak **26.8.2**, das Theme-JAR, ein abgeschlossener Keycloak-
 | `sha-<vollständiger-Commit>` | Eindeutige Build-Version für reproduzierbare Deployments |
 | `0.1.0` bei Git-Tag `v0.1.0` | Version des Themes; wird bei einem entsprechenden Release-Tag erzeugt |
 
-`latest` und `26.8.2` werden bei neuen erfolgreichen Builds aktualisiert. Zum Festschreiben einer konkreten Version den Commit-Tag oder Image-Digest verwenden; veröffentlichte Tags stehen in der GitHub-Workflow-Zusammenfassung und auf Docker Hub.
+`latest` und `26.8.2` werden bei neuen erfolgreichen Builds aktualisiert. Zum Festschreiben einer konkreten Version den Commit-Tag oder Image-Digest verwenden; veröffentlichte Tags stehen für `main` im Drone-Build und auf Docker Hub; Release-Tags stehen zusätzlich im GitHub-Actions-Lauf.
 
 Ein vollständiges Compose-Beispiel mit dauerhaft gespeicherter PostgreSQL-Datenbank liegt in [compose.hub.yaml](compose.hub.yaml):
 
